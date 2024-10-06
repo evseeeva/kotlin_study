@@ -43,7 +43,9 @@ fun main() {
     println("Как зовут $petType?")
     val petName = readLine().toString()
     println("Сколько лет $petName?")
-    val petAge = readLine().toString()
+   // val petAge = readLine().toString()
+    val petAge = readLine()?.toIntOrNull()?:-1
+
     val petInfo = petInfo(petType, petName, petAge)
     petInfo.printInfo()
 
