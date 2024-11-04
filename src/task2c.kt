@@ -25,9 +25,7 @@ fun main() {
     sayHello()
     sayHello("Настя")
     infix fun Int.isGreater(other: Int): Boolean {
-        if (this > other)
-            return true
-        else return false
+       return this > other
     }
 
     /**
@@ -37,15 +35,21 @@ fun main() {
     var max = Int.MIN_VALUE
     var max1 = Int.MIN_VALUE
     var max2 = Int.MIN_VALUE
-    if (a isGreater b)
+    if (a isGreater b) {
         max1 = a
-    else max1 = b
-    if (c isGreater d)
+    } else {
+        max1 = b
+    }
+    if (c isGreater d) {
         max2 = c
-    else max2 = d
-    if (max1 isGreater max2)
+    } else {
+        max2 = d
+    }
+    if (max1 isGreater max2) {
         max = max1
-    else max = max2
+    } else {
+        max = max2
+    }
     println(max)
 
     /**
@@ -77,10 +81,10 @@ fun main() {
         removeAt(4)
     }.also { println("Новый список имен $it") }
 
-   names.run {
-       println("Имена, начинающиеся на а: ${filter { it.get(0) == 'А' }}")
-       println("Имена, заканчивающиеся на а: ${filter { it.get(it.length - 1) == 'а' }}")
-       println("Список в обратном порядке: ${reversed()}")
+    names.run {
+        println("Имена, начинающиеся на а: ${filter { it.get(0) == 'А' }}")
+        println("Имена, заканчивающиеся на а: ${filter { it.get(it.length - 1) == 'а' }}")
+        println("Список в обратном порядке: ${reversed()}")
     }
 
     var revertFirstName = names.first().let { firstName ->
