@@ -7,12 +7,13 @@ fun main() {
      * Создайте класс Car с полями model, color, year и методом drive(). Создайте несколько объектов этого класса и вызовите их метод drive().
      */
 
-    var car1: Car = Car("Porshe", "black", 2020)
-    var car2: Car = Car("Mazda", "red", 2000)
-    var car3: Car = Car("Volga", "grey", 1980)
+    val car1 = Car("Porsche", "black", 2020)
+    val car2 = Car("Mazda", "red", 2000)
+    val car3 = Car("Volga", "grey", 1980)
     car1.drive()
     car2.drive()
     car3.drive()
+
 
     /**
      * Задание 2
@@ -34,7 +35,7 @@ fun main() {
      * Создайте класс Person с приватными свойствами name, age и публичными методами getName() и getAge(). Проверьте, что прямой доступ к этим свойствам невозможен извне класса.
      */
 
-    var person: PersonPrivate = PersonPrivate()
+    val person = PersonPrivate()
     person.setName("Tom")
     person.setAge(20)
     println("Person: name - ${person.getName()}, age - ${person.getAge()}")
@@ -44,7 +45,7 @@ fun main() {
      * В классе Person добавьте custom геттеры и сеттеры для свойств name и age. Убедитесь, что вы можете управлять доступом к этим свойствам извне класса. Например, вы можете реализовать проверку возраста в сеттере, чтобы убедиться, что возраст неотрицательный.
      */
 
-    var person2: Person = Person()
+    val person2 = Person()
     person2.name = "Jerry"
     person2.age = 3
     println("Person: name - ${person2.name}, age - ${person2.age}")
@@ -54,8 +55,8 @@ fun main() {
      * Создайте класс Animal с методом makeSound(), затем создайте классы Dog и Cat, наследующие от Animal, и переопределите метод makeSound(). Создайте объекты Dog и Cat и вызовите их методы makeSound().
      */
 
-    var cat: Animal = Cat()
-    var dog: Animal = Dog()
+    val cat: Animal = Cat()
+    val dog: Animal = Dog()
     cat.makeSound()
     dog.makeSound()
 
@@ -71,9 +72,9 @@ fun main() {
      * Задание 8
      * Создайте абстрактный класс Shape с абстрактным методом area(), затем создайте классы Circle и Rectangle, реализующие этот метод. Создайте объекты Circle и Rectangle и выведите их площадь.
      */
-    var circle: Circle = Circle(5.0)
+    val circle: Circle = Circle(5.0)
     println("Circle area = ${circle.area()}")
-    var rectangle: Rectangle = Rectangle(2.0, 3.0)
+    val rectangle: Rectangle = Rectangle(2.0, 3.0)
     println("Rectangle area = ${rectangle.area()}")
 
     /**
@@ -81,23 +82,20 @@ fun main() {
      * Создайте интерфейс Flyable с методом fly() и интерфейс Navigable  с методом navigate(), затем создайте классы Bird и Airplane, реализующие эти интерфейсы. Создайте объекты Bird и Airplane и вызовите их методы fly() и navigate().
      */
 
-    var bird: Bird = Bird()
+    val bird: Bird = Bird()
     bird.fly()
     bird.navigate()
-    var airplane: Airplane = Airplane()
+    val airplane: Airplane = Airplane()
     airplane.fly()
     airplane.navigate()
-
 }
 
 
-class Car(_model: String, _color: String, _year: Int) {
-    val model: String = _model
-    var color: String = _color
-    var year: Int = _year
+class Car(val model: String, var color: String, var year: Int) {
     fun drive() {
-        println("Car  ${model} ${color} ${year} is driving")
+        println("Car  $model $color $year is driving")
     }
+
 }
 
 enum class DayOfWeek() {
@@ -118,23 +116,23 @@ object Singleton {
 }
 
 class PersonPrivate {
-    private var name: String = "Unknown"
-    private var age: Int = 0
+    private var name = "Unknown"
+    private var age = 0
 
-    fun setName(_name: String) {
-        name = _name
+    fun setName(name: String) {
+        this.name = name
     }
 
     fun getName(): String {
-        return name
+        return this.name
     }
 
-    fun setAge(_age: Int) {
-        age = _age
+    fun setAge(age: Int) {
+        this.age = age
     }
 
     fun getAge(): Int {
-        return age
+        return this.age
     }
 }
 
@@ -150,7 +148,6 @@ class Person {
         }
     var age: Int = 0
         set(value) {
-
             if (value > 0) {
                 println("Setting age to $value")
                 field = value
