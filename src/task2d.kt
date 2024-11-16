@@ -14,7 +14,6 @@ fun main() {
     car2.drive()
     car3.drive()
 
-
     /**
      * Задание 2
      * Создайте enum class DayOfWeek, содержащий все дни недели. Выведите все дни недели, используя свойства values и name этого enum.
@@ -88,6 +87,50 @@ fun main() {
     val airplane: Airplane = Airplane()
     airplane.fly()
     airplane.navigate()
+
+    /**
+     * Задание 10
+     * Создайте data class User с двумя свойствами и методом printInfo(), который выводит информацию о пользователе. Создайте объект User и вызовите его метод printInfo().
+     */
+
+    val user: User = User(831829, "Sue")
+    user.printInfo()
+
+    /**
+     * Задание 11
+     * Создайте sealed class MathOperation и несколько объектов, представляющих различные математические операции (например, Add, Subtract, Multiply, Divide). Создайте функцию, которая принимает MathOperation и два числа, и выполняет соответствующую операцию.
+     */
+
+    println(performMathOperation(Add, 6.5, 7.0))
+
+    /**
+     * Задание 12
+     * Создайте два класса: Mammal и CanFly. В классе Mammal определите метод breastfeed(), а в классе CanFly - метод fly(). Затем создайте класс Bat, который сочетает в себе оба этих поведения (с помощью композиции).
+     */
+
+    val bat = Bat(mammal = Mammal(), canFly = CanFly())
+    bat.performFly()
+    bat.performBreastFeed()
+
+    /**
+     * Задание 13
+     * Создайте классы Engine и Tires. Затем создайте класс Car, который получает Engine и Tires через конструктор (Dependency Injection).
+     */
+
+    val carDI = CarDI(Tires(), Engine())
+    carDI.drive()
+
+    /**
+     * Задание 14
+     * Создайте обобщенный интерфейс Repository<T>, который содержит методы для сохранения (save(item: T)), удаления (delete(item: T)) и получения всех элементов (getAll(): List<T>). Реализуйте этот интерфейс в классе UserRepository для работы с объектами класса User.
+     */
+
+    val userRepository = UserRepository<User>()
+    userRepository.save(user)
+    userRepository.save(User(1832923, "Andy"))
+    println(userRepository.getAll())
+    userRepository.delete(user)
+    println(userRepository.getAll())
 }
 
 
@@ -236,3 +279,99 @@ class Airplane : Flyable, Navigable {
         println("The airplane navigates using the GPS system")
     }
 }
+
+data class User(val id: Int, val nickname: String) {
+    fun printInfo() {
+        println(toString())
+    }
+}
+
+sealed class MathOperation
+
+object Add : MathOperation()
+object Subtract : MathOperation()
+object Multiply : MathOperation()
+object Divide : MathOperation()
+
+fun performMathOperation(mathOperation: MathOperation, a: Double, b: Double): Double {
+    return when (mathOperation) {
+        Add -> a + b
+        Subtract -> a - b
+        Multiply -> a * b
+        Divide -> a / b
+    }
+}
+
+
+class Bat() {
+    private var mammal: Mammal? = null
+    private var canFly: CanFly? = null
+
+    constructor(mammal: Mammal, canFly: CanFly) : this() {
+        this.mammal = mammal
+        this.canFly = canFly
+    }
+
+    fun performFly() {
+        canFly?.fly()
+    }
+
+    fun performBreastFeed() {
+        mammal?.breastfeed()
+    }
+}
+
+open class Mammal {
+    fun breastfeed() {
+        println("Feeds children with breast milk")
+    }
+}
+
+open class CanFly {
+    fun fly() {
+        println("Can fly")
+    }
+}
+
+class CarDI(private val tires: Tires, private val engine: Engine) {
+    fun drive() {
+        engine.start()
+        tires.move()
+    }
+}
+
+open class Tires {
+    fun move() {
+        println("The wheels аre spinning")
+    }
+}
+
+open class Engine {
+    fun start() {
+        println("The engine starts")
+    }
+}
+
+interface Repository<T> {
+    fun save(item: T)
+    fun delete(item: T)
+    fun getAll(): List<T>
+}
+
+class UserRepository<User> : Repository<User> {
+    private var userList = mutableListOf<User>()
+    override fun save(item: User) {
+        userList.add(item)
+    }
+
+    override fun delete(item: User) {
+        userList.remove(item)
+    }
+
+    override fun getAll(): List<User> {
+        return userList
+    }
+}
+
+
+
