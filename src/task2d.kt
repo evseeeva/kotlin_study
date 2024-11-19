@@ -101,7 +101,7 @@ fun main() {
      * Создайте sealed class MathOperation и несколько объектов, представляющих различные математические операции (например, Add, Subtract, Multiply, Divide). Создайте функцию, которая принимает MathOperation и два числа, и выполняет соответствующую операцию.
      */
 
-    println(performMathOperation(Add, 6.5, 7.0))
+    println(performMathOperation(Divide, 10.0, 0.0))
 
     /**
      * Задание 12
@@ -298,26 +298,28 @@ fun performMathOperation(mathOperation: MathOperation, a: Double, b: Double): Do
         Add -> a + b
         Subtract -> a - b
         Multiply -> a * b
-        Divide -> a / b
+        Divide -> {
+            try {
+                a / b
+            } catch (e: ArithmeticException) {
+                println("Вызвано исключение: $e")
+                return -1.0
+            }
+        }
     }
+
+}
 }
 
 
-class Bat() {
-    private var mammal: Mammal? = null
-    private var canFly: CanFly? = null
-
-    constructor(mammal: Mammal, canFly: CanFly) : this() {
-        this.mammal = mammal
-        this.canFly = canFly
-    }
+class Bat(private val mammal: Mammal, private val canFly: CanFly) {
 
     fun performFly() {
-        canFly?.fly()
+        canFly.fly()
     }
 
     fun performBreastFeed() {
-        mammal?.breastfeed()
+        mammal.breastfeed()
     }
 }
 
