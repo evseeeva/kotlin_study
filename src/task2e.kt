@@ -5,7 +5,7 @@ fun main() {
      */
 
     val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    val squaredEvenNumbers = numbers.filter { it % 2 == 0 }.map { it * it }
+    val squaredEvenNumbers = numbers.filter { it % 2 == 0 }.map { it * 2 }
     println(squaredEvenNumbers)
 
     /**
@@ -63,14 +63,12 @@ fun main() {
 
     class Person(val name: String, val age: Int)
 
-    val persons =
-        listOf(
-            Person("Tom", 23),
-            Person("Ann", 2),
-            Person("Mary", 17),
-            Person("Bill", 84)
-        )
-    val adultsPersons = persons.filter { it.age >= 18 }.map { it.name }
+    val adultsPersons =  listOf(
+        Person("Tom", 23),
+        Person("Ann", 2),
+        Person("Mary", 17),
+        Person("Bill", 84)
+    ).filter { it.age >= 18 }.map { it.name }
     println(adultsPersons)
 
     /**
@@ -80,17 +78,15 @@ fun main() {
 
     val sequence = sequence {
         var num = 1
-        while (true) {
+        while (num <= 1000) {
             yield(num++)
         }
-    }.filter {
-        it % 5 == 0
     }
-        .map {
-            it * 5
-        }
+        .filter { it % 5 == 0 }
+        .map { it * 5 }
     val result = sequence.take(20).toList()
     println(result)
+
     /**
      * Задание 7
      * Создайте класс Car с полями make, model и year. Создайте коллекцию из нескольких объектов этого класса и используйте groupBy чтобы сгруппировать машины по году выпуска.
